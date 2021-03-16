@@ -58,6 +58,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/react-component/field-form.git"
+    "url": "git+https://github.com/calmchang/rc-form-table"
   }
 }
