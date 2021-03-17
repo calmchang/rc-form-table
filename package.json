@@ -49,7 +49,7 @@
   ],
   "description": "antd2x和antd3x下用于Form组件下的Table组件，方便管理Table内的FormItem",
   "engines": {
-    "node": ">=8.12.x"
+    "node": ">=6.12.x"
   },
   "license": "MIT",
   "repository": {
