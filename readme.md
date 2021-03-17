@@ -119,3 +119,16 @@ class _Demo extends React.Component {
 const Demo = Form.create()(_Demo);
 ReactDOM.render(<Demo />, document.getElementById("container"));
 ```
+
+### API
+
+参数|说明|类型|默认值
+:-|:-|:-|:-
+initialValue|初始的表格数据源|Array|-
+formItemName|字段名|String|-
+form|父组件的props.form|Form|-
+antTableOptions|antd Table组件的参数，参考antd文档|Object|-
+newdata|新增一条数据的数据模板|Object|-
+columns|同antd table的columns|Function({onDel,onCopy,onAdd})=>void|-
+onChange|当数据发生变化时的回调|(value)=>void|-
+onAdd|当触发添加事件时的消息拦截，返回的是被创建的新数据项，如果返回空则不添加数据|(record,index)=>object|-
