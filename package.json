@@ -1,6 +1,6 @@
 {
   "name": "rc-form-table",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "build": "webpack --config package.config.js",
     "test": "webpack-dev-server --config webpack.config.js"
