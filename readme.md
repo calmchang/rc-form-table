@@ -1,4 +1,7 @@
 
+![antd](https://img.shields.io/badge/ant--desigin-2.x~3.x-blue)
+![node](https://img.shields.io/badge/node-%3E%3D8-green)
+
 ### 组件作用  
 rc-form-table用于解决在antd2.x和antd3.x下，当使用Form表单处理数据遇上Table时的增删查改操作
 
