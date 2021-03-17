@@ -37,19 +37,20 @@ module.exports = {
           loader:'babel-loader',
           options:{
               presets: [ 
+               
                   "@babel/preset-react",
-                  // [
-                  // "@babel/preset-env",{
-                  //     targets: {
-                  //         chrome: "60",
-                  //         // ie: "11"
-                  //     },
-                  //     useBuiltIns:false
-                  //   }
-                  // ]
+                  [
+                    "@babel/preset-env",{
+                        targets: {
+                            chrome: "60",
+                            // ie: "11"
+                        },
+                      }
+                    ],
+                  
               ],
               // plugins: [
-              //     ["@babel/plugin-transform-runtime",{corejs:3}],
+              //     ["@babel/plugin-transform-runtime"],
               // ] 
           }
         },
