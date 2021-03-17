@@ -7,7 +7,8 @@ import { Table } from "antd";
 class TableFormItem extends React.Component {
     constructor(props) {
         super(props);
-        let initialValue = props.initialValue.map((item,idx)=>{item._rowKey=`${idx}`;return item});
+        let initialValue = props.initialValue||[];
+        initialValue=initialValue.map((item,idx)=>{item._rowKey=`${idx}`;return item});
         this.state={
           initialValue:initialValue,
           value:initialValue,
@@ -18,7 +19,7 @@ class TableFormItem extends React.Component {
     getNewId() {
         return `${Date.now()}_${this.counter++}`;
     }
-    onCopy = async (record, index, event) => {
+    async onCopy(record, index, event) {
         if (event) event.preventDefault();
         const form = this.props.form;
         const {formName}= this.state;
@@ -37,9 +38,9 @@ class TableFormItem extends React.Component {
 
         let newFormData = this.onInsert(newdata,index);
         this.onChange(newFormData);
-    };
+    }
 
-    onInsert=async (newdata,index)=>{
+    async onInsert(newdata,index){
       const {form} = this.props;
       const { getFieldValue, setFieldsValue } = form;
       const {formName,value}= this.state
@@ -57,7 +58,7 @@ class TableFormItem extends React.Component {
       return formData;
     }
 
-    onAdd = async (record, index, event) => {
+    async onAdd(record, index, event){
       if (event) event.preventDefault();
       
       let newdata = null;
@@ -74,9 +75,9 @@ class TableFormItem extends React.Component {
       
       this.onChange(formData);
 
-    };
+    }
 
-    onDel = async (record, index, event) => {
+    async onDel(record, index, event){
       if (event) event.preventDefault();
       const {form} = this.props;
       const { getFieldValue, setFieldsValue } = form;
@@ -92,7 +93,7 @@ class TableFormItem extends React.Component {
 
     };
 
-    onReset=async(event)=>{
+    async onReset(event){
       if (event) event.preventDefault();
       const {form} = this.props;
       const {setFieldsValue } = form;
@@ -104,7 +105,7 @@ class TableFormItem extends React.Component {
       await setFieldsValue({[formName]:initialValue});
     }
 
-    onChange = async (value) => {
+    async onChange(value){
       if (this.props.onChange) {
           await this.props.onChange(value);
       }
@@ -120,10 +121,10 @@ class TableFormItem extends React.Component {
                 {...this.props.antTableOptions}
                 dataSource={value}
                 columns={this.props.columns({
-                    onDel: this.onDel,
-                    onAdd: this.onAdd,
-                    onCopy: this.onCopy,
-                    onReset:this.onReset
+                    onDel: this.onDel.bind(this),
+                    onAdd: this.onAdd.bind(this),
+                    onCopy: this.onCopy.bind(this),
+                    onReset:this.onReset.bind(this)
                 })}
             />
         );
