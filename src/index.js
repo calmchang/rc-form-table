@@ -93,16 +93,19 @@ class TableFormItem extends React.Component {
 
     };
 
-    async onReset(event){
+    async onReset(initValue,event){
       if (event) event.preventDefault();
       const {form} = this.props;
       const {setFieldsValue } = form;
       const {formName,initialValue}= this.state;
-      await this.setState({value:[]});
+      const {initialValue} = this.props;
+      initialValue=initialValue.map((item,idx)=>{item._rowKey=`${idx}`;return item});
+
+      await this.setState({value:[],initialValue:initValue});
       await setFieldsValue({[formName]:[]})
 
-      await this.setState({value:initialValue});
-      await setFieldsValue({[formName]:initialValue});
+      await this.setState({value:initValue});
+      await setFieldsValue({[formName]:initValue});
     }
 
     async onChange(value){

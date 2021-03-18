@@ -16,7 +16,7 @@ class CDemo extends React.Component {
   }
 
 
-  createColumn = (option) => {
+  createColumn(option) {
     const {
       form: { getFieldDecorator, getFieldValue },
     } = this.props;
@@ -90,19 +90,19 @@ class CDemo extends React.Component {
     return ret;
   };
   
-  btnAdd = () => {
+  btnAdd()  {
     this._refApply.onAdd();
   };
   
-  btnReset=()=>{
-    this._refApply.onReset();
+  btnReset(){
+    this._refApply.onReset([{id:111,name:'111'}]);
   }
   
-  onTableChange=(data)=>{
+  onTableChange(data){
     this.updateTitle();
   }
   
-  updateTitle=()=>{
+  updateTitle(){
     const {getFieldValue,setFieldsValue } = this.props.form;
     let curFormData = getFieldValue('APPLY_LIST');
     if(curFormData&&curFormData[0]){
@@ -122,11 +122,11 @@ class CDemo extends React.Component {
             获取数据
           </Button>
 
-          <Button type='primary' style={{margin:'0 20px'}} onClick={this.btnAdd} >
+          <Button type='primary' style={{margin:'0 20px'}} onClick={this.btnAdd.bind(this)} >
             新增
           </Button>
 
-          <Button type='primary' onClick={this.btnReset} >
+          <Button type='primary' onClick={this.btnReset.bind(this)} >
             重置
           </Button>
 
