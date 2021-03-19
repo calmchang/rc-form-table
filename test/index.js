@@ -9,24 +9,42 @@ class CDemo extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-      APPLY_LIST:[{id:1,name:'1'},
-      // {id:2,name:'2'}
-    ]
+      APPLY_LIST:[{id:1,name:'name1',nation:'',city:''}],
+      NATION_INFO:[
+        {name:'中国',list:['上海','北京','广州']},
+        {name:'日本',list:['东京','大阪','京都']},
+        {name:'韩国',list:['釜山','首尔','济州']}
+      ]
     }
   }
 
+  renderCity(nation){
+    let city = this.state.NATION_INFO.filter(item=>item.name===nation)[0];
+    return (
+      <Select>
+        {
+          city.map((item,idx)=>{
+            return (
+              <Select.Option value={item} key={idx}>{item}</Select.Option>
+            )
+          })
+        }
+      </Select>
+    )
+  }
 
   createColumn(option) {
     const {
-      form: { getFieldDecorator, getFieldValue },
+      form: { getFieldDecorator, getFieldsValue, getFieldValue, setFieldsValue},
     } = this.props;
+    let curData = getFieldsValue()['APPLY_LIST'];
 
     let ret = [
       {
         align: 'center',
         dataIndex: 'id',
         title: <span>id</span>,
-        width: 110,
+        width: 60,
         render: (text, record, index) => {
           return (
             <div>
@@ -36,6 +54,7 @@ class CDemo extends React.Component {
                   onChange:()=>{this.updateTitle()}
                 })(<Input type='text' />)}
               </Form.Item>
+              
           </div>
           );
         },
@@ -45,7 +64,7 @@ class CDemo extends React.Component {
         align: 'center',
         dataIndex: 'name',
         title: <span>name</span>,
-        width: 110,
+        width: 60,
         render: (text, record, index) => {
           return (
             <div>
@@ -63,12 +82,75 @@ class CDemo extends React.Component {
           );
         },
       },
+      {
+        align: 'center',
+        dataIndex: 'nation',
+        title: <span>目的国家</span>,
+        width: 80,
+        render: (text, record, index) => {
+          return (
+            <div>
+              <Form.Item>
+                {getFieldDecorator(`APPLY_LIST[${index}].nation`, {
+                  initialValue: record.nation || '',
+                  onChange:()=>{
+                    setFieldsValue({[`APPLY_LIST[${index}].city`]:''})
+                  }
+                })(
+                  <Select>
+                    {
+                      this.state.NATION_INFO.map((nation,idx)=>{
+                        return (
+                          <Select.Option value={nation.name} key={idx}>{nation.name}</Select.Option>
+                        )
+                      })
+                    }
+                  </Select>
+                )}
+              </Form.Item>
+          </div>
+          );
+        },
+      },
+      {
+        align: 'center',
+        dataIndex: 'city',
+        title: <span>城市</span>,
+        width: 80,
+        render: (text, record, index) => {
+          let nation=[];
+          if(curData&&curData[index].nation){
+            nation = this.state.NATION_INFO.filter(item=>item.name===curData[index].nation)[0].list;
+          }
+
+          return (
+            <div>
+              <Form.Item>
+                {getFieldDecorator(`APPLY_LIST[${index}].city`, {
+                  initialValue: record.city || '',
+                })(
+                    <Select>
+                      {
+                        nation.map((item,idx)=>{
+                          return (
+                            <Select.Option value={item} key={idx}>{item}</Select.Option>
+                          )
+                        })
+                      }
+                    </Select>
+                  )
+                }
+              </Form.Item>
+          </div>
+          );
+        },
+      }
     ];
     ret.push({
       align: 'center',
       dataIndex: 'oper',
       title: '操作',
-      width: 50,
+      width: 120,
       render: (text, record, index) => {
         return (
           <div>
@@ -78,7 +160,7 @@ class CDemo extends React.Component {
           <a href='javascript:;' onClick={option.onCopy.bind(this, record, index)} style={{margin:'0 20px'}}>
             复制
           </a>
-          <a href='javascript:;' onClick={option.onAdd.bind(this, record, index)} style={{margin:'0 20px'}}>
+          <a href='javascript:;' onClick={option.onAdd.bind(this, record, index)}>
             添加
           </a>
           </div>
@@ -95,7 +177,7 @@ class CDemo extends React.Component {
   };
   
   btnReset(){
-    this._refApply.onReset([{id:111,name:'111'}]);
+    this._refApply.onReset([{id:'重置后的id',name:'重置后的name'}]);
   }
   
   onTableChange(data){
@@ -103,61 +185,70 @@ class CDemo extends React.Component {
   }
   
   updateTitle(){
-    const {getFieldValue,setFieldsValue } = this.props.form;
-    let curFormData = getFieldValue('APPLY_LIST');
-    if(curFormData&&curFormData[0]){
-      setFieldsValue({TITLE:`${curFormData[0].id}-${curFormData[0].name}`})
-    }
   }
-  render() {
-    const { getFieldDecorator, getFieldsValue,getFieldValue, resetFields } = this.props.form;
-    const {APPLY_LIST} = this.state
+  componentDidMount(){
+    this.updateLog(this.props);
+  }
+  updateLog(props){
+    props=props||this.props;
+    const { getFieldsValue } = props.form;
     let curFormData = getFieldsValue();
+    let html = prettyPrintJson.toHtml(curFormData)
+    this.setState({
+      log:html
+    })
+  }
+  componentWillReceiveProps(nextProps){
+    // setTimeout(()=>{
+      this.updateLog(nextProps)
+    // },0)
+    
+  }
+
+  render() {
+    const { getFieldDecorator } = this.props.form;
+    const {APPLY_LIST} = this.state
+
     return (
       <section>
-          <Button type='primary' onClick={()=>{
-            const { getFieldDecorator, getFieldsValue, resetFields } = this.props.form;
-            this.setState({log:JSON.stringify(getFieldsValue())});
-          }} >
-            获取数据
-          </Button>
+        
+        <Button type='primary'  onClick={this.btnReset.bind(this)} >
+          重置表单
+        </Button>
 
-          <Button type='primary' style={{margin:'0 20px'}} onClick={this.btnAdd.bind(this)} >
-            新增
-          </Button>
+        <section style={{display:'flex',flexDirection:'row',marginTop:'20px'}}>
+          <div style={{width:'300px',border:'1px solid black',marginRight:'20px'}}>
+            <span>当前表单数据:</span>
+            <pre dangerouslySetInnerHTML={{__html:this.state.log}}></pre>
+          </div>
 
-          <Button type='primary' onClick={this.btnReset.bind(this)} >
-            重置
-          </Button>
+          <Form style={{width:'800px'}}>
+            <Form.Item label='标题'> 
+              {getFieldDecorator(`TITLE`, {
+                initialValue: '默认标题',
+              })(<Input type='text' />)}
+            </Form.Item>
+            
+            
+            <RcFormTable
+              initialValue={APPLY_LIST}
+              ref={(_ref) => {
+                this._refApply = _ref;
+              }}
+              form={this.props.form}
+              formItemName='APPLY_LIST'
+              antTableOptions={{ rowKey: '_rowKey', bordered: true, pagination: false }}
+              newdata={{
+                name: '',
+                id:''
+              }}
+              columns={this.createColumn.bind(this)}
+              onChange={this.onTableChange.bind(this)}
+            /> 
+            
+          </Form>
 
-        <p>curFormData:{JSON.stringify(curFormData)}</p>
-
-        <Form>
-          <Form.Item label='title'> 
-            {getFieldDecorator(`TITLE`, {
-              initialValue: '',
-            })(<Input type='text' />)}
-          </Form.Item>
-
-          
-          <RcFormTable
-            initialValue={APPLY_LIST}
-            ref={(_ref) => {
-              this._refApply = _ref;
-            }}
-            form={this.props.form}
-            formItemName='APPLY_LIST'
-            antTableOptions={{ rowKey: '_rowKey', bordered: true, pagination: false }}
-            newdata={{
-              name: '',
-              id:''
-            }}
-            columns={this.createColumn.bind(this)}
-            onChange={this.onTableChange.bind(this)}
-          /> 
-          
-        </Form>
-        <div>{this.state.log}</div>
+        </section>
       </section>
     );
   }

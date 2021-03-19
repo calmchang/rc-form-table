@@ -6,7 +6,7 @@
 rc-form-table用于解决在antd2.x和antd3.x下，当使用Form表单处理数据遇上Table时的增删查改操作
 
 ### 预览图
-![review.jpg](http://img.vuedata.cn/rc-form-table.jpg?imageView2/2/w/720)
+![review.jpg](http://img.vuedata.cn/rc-form-table-review.gif)
 
 ### install  
 `npm install rc-form-table`
