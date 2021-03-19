@@ -1,6 +1,7 @@
 
 ![antd](https://img.shields.io/badge/ant--desigin-2.x~3.x-blue)
 ![node](https://img.shields.io/badge/node-%3E%3D8-green)
+![npm](https://img.shields.io/badge/npm-%3E%3D6.14.5-orange)
 
 ### 组件作用  
 rc-form-table用于解决在antd2.x和antd3.x下，当使用Form表单处理数据遇上Table时的增删查改操作
@@ -132,3 +133,10 @@ newdata|新增一条数据的数据模板|Object|-
 columns|同antd table的columns|Function({onDel,onCopy,onAdd})=>void|-
 onChange|当数据发生变化时的回调|(value)=>void|-
 onAdd|当触发添加事件时的消息拦截，返回的是被创建的新数据项，如果返回空则不添加数据|(record,index)=>object|-
+
+
+### 组件内部可用方法，可以通过ref使用组件内部方法
+
+参数|说明|类型|默认值
+:-|:-|:-|:-
+onReset|重置表单内数据|(arr?:object[])=>void|-
