@@ -154,8 +154,11 @@ class CDemo extends React.Component {
       render: (text, record, index) => {
         return (
           <div>
-          <a href='javascript:;' onClick={option.onDel.bind(this, record, index)} >
+          <a href='javascript:;' onClick={option.onDel.bind(this, {record, index})} >
             删除
+          </a>
+          <a href='javascript:;' onClick={option.onDel.bind(this, {record, index, saveLast: true})} style={{margin:'0 20px'}}>
+            删除(保留最后一条)
           </a>
           <a href='javascript:;' onClick={option.onCopy.bind(this, record, index)} style={{margin:'0 20px'}}>
             复制
