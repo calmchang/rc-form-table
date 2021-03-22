@@ -79,18 +79,21 @@ class TableFormItem extends React.Component {
 
     async onDel(record, index, event){
       if (event) event.preventDefault();
-      const {form} = this.props;
+      const {form, saveLast} = this.props;
       const { getFieldValue, setFieldsValue } = form;
       const {formName}= this.state;
       const formData = (getFieldValue(formName) || []);
-
+      let isLast = formData.length === 1;
       formData.splice(index,1);
       await this.setState({value:[]});
       await setFieldsValue({[formName]:[]})
       await this.setState({value:formData});
       await setFieldsValue({[formName]:formData});
-      this.onChange(formData);
-
+      if (saveLast && isLast) {
+        await this.onAdd(record, index, event)
+      } else {
+        this.onChange(formData);
+      }
     };
 
     async onReset(initValue,event){
