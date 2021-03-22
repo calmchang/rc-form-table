@@ -14,7 +14,8 @@ class CDemo extends React.Component {
         {name:'中国',list:['上海','北京','广州']},
         {name:'日本',list:['东京','大阪','京都']},
         {name:'韩国',list:['釜山','首尔','济州']}
-      ]
+      ],
+      savelast: false
     }
   }
 
@@ -31,6 +32,14 @@ class CDemo extends React.Component {
         }
       </Select>
     )
+  }
+
+  handleDel(option, record, index, flag, event) {
+    this.setState({
+      savelast: flag
+    }, () => {
+      option.onDel(record, index, event)
+    })
   }
 
   createColumn(option) {
@@ -154,10 +163,10 @@ class CDemo extends React.Component {
       render: (text, record, index) => {
         return (
           <div>
-          <a href='javascript:;' onClick={option.onDel.bind(this, {record, index})} >
+          <a href='javascript:;' onClick={this.handleDel.bind(this, option, record, index, false)} >
             删除
           </a>
-          <a href='javascript:;' onClick={option.onDel.bind(this, {record, index, saveLast: true})} style={{margin:'0 20px'}}>
+          <a href='javascript:;' onClick={this.handleDel.bind(this, option, record, index, true)} style={{margin:'0 20px'}}>
             删除(保留最后一条)
           </a>
           <a href='javascript:;' onClick={option.onCopy.bind(this, record, index)} style={{margin:'0 20px'}}>
@@ -210,7 +219,7 @@ class CDemo extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const {APPLY_LIST} = this.state
+    const {APPLY_LIST, savelast} = this.state
 
     return (
       <section>
@@ -234,6 +243,7 @@ class CDemo extends React.Component {
             
             
             <RcFormTable
+              saveLast={savelast}
               initialValue={APPLY_LIST}
               ref={(_ref) => {
                 this._refApply = _ref;
