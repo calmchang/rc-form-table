@@ -89,9 +89,10 @@ class TableFormItem extends React.Component {
       await setFieldsValue({[formName]:[]})
       await this.setState({value:formData});
       await setFieldsValue({[formName]:formData});
-      this.onChange(formData);
       if (saveLast && isLast) {
         await this.onAdd(record, index, event)
+      } else {
+        this.onChange(formData);
       }
     };
 
@@ -123,7 +124,6 @@ class TableFormItem extends React.Component {
 
     render() {
         const { value } = this.state;
-        const {saveLast} = this.props;
         return (
             <Table
                 {...this.props.antTableOptions}

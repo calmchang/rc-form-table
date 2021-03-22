@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 // import './index.css';
-import { Form, Select, Button, Input, Table } from "antd";
+import { Form, Select, Button, Input, Table, Checkbox, Row, Col } from "antd";
 import RcFormTable from '../src/index.js';
 
 class CDemo extends React.Component {
@@ -15,7 +15,7 @@ class CDemo extends React.Component {
         {name:'日本',list:['东京','大阪','京都']},
         {name:'韩国',list:['釜山','首尔','济州']}
       ],
-      savelast: false
+      saveLast: false
     }
   }
 
@@ -34,11 +34,10 @@ class CDemo extends React.Component {
     )
   }
 
-  handleDel(option, record, index, flag, event) {
+  handleCheckbox(e) {
+    const val = e.target.checked;
     this.setState({
-      savelast: flag
-    }, () => {
-      option.onDel(record, index, event)
+      saveLast: val
     })
   }
 
@@ -163,11 +162,8 @@ class CDemo extends React.Component {
       render: (text, record, index) => {
         return (
           <div>
-          <a href='javascript:;' onClick={this.handleDel.bind(this, option, record, index, false)} >
+          <a href='javascript:;' onClick={option.onDel.bind(this, record, index)} >
             删除
-          </a>
-          <a href='javascript:;' onClick={this.handleDel.bind(this, option, record, index, true)} style={{margin:'0 20px'}}>
-            删除(保留最后一条)
           </a>
           <a href='javascript:;' onClick={option.onCopy.bind(this, record, index)} style={{margin:'0 20px'}}>
             复制
@@ -219,7 +215,7 @@ class CDemo extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const {APPLY_LIST, savelast} = this.state
+    const {APPLY_LIST, saveLast} = this.state
 
     return (
       <section>
@@ -227,6 +223,12 @@ class CDemo extends React.Component {
         <Button type='primary'  onClick={this.btnReset.bind(this)} >
           重置表单
         </Button>
+         
+        <Row>
+          <Col span={8}>
+            <Checkbox onChange={this.handleCheckbox.bind(this)} value={saveLast}>删除(保留最后一条)</Checkbox>
+          </Col>
+        </Row>
 
         <section style={{display:'flex',flexDirection:'row',marginTop:'20px'}}>
           <div style={{width:'300px',border:'1px solid black',marginRight:'20px'}}>
@@ -243,7 +245,7 @@ class CDemo extends React.Component {
             
             
             <RcFormTable
-              saveLast={savelast}
+              saveLast={saveLast}
               initialValue={APPLY_LIST}
               ref={(_ref) => {
                 this._refApply = _ref;
