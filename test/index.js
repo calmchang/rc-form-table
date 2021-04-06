@@ -223,6 +223,9 @@ class CDemo extends React.Component {
         <Button type='primary'  onClick={this.btnReset.bind(this)} >
           重置表单
         </Button>
+        <Button type='primary' onClick={()=>{this._refApply.onAdd()}} >
+          添加
+        </Button>
          
         <Row>
           <Col span={8}>
@@ -252,7 +255,7 @@ class CDemo extends React.Component {
               }}
               form={this.props.form}
               formItemName='APPLY_LIST'
-              antTableOptions={{ rowKey: '_rowKey', bordered: true, pagination: false }}
+              antTableOptions={{ rowKey: '_rowKey', bordered: true, pagination: false ,scroll:{x:true}}}
               newdata={{
                 name: '',
                 id:''
@@ -260,8 +263,11 @@ class CDemo extends React.Component {
               columns={this.createColumn.bind(this)}
               onChange={this.onTableChange.bind(this)}
             /> 
-            
+            <Button type='primary' onClick={()=>{this._refApply.onAdd()}} >
+            添加
+            </Button>
           </Form>
+          
 
         </section>
       </section>
