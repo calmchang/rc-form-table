@@ -7,8 +7,8 @@
 node:10.15.0
 npm:6.14.5
 ### 组件作用  
-rc-form-table用于解决在antd2.x和antd3.x下，当使用Form表单处理数据遇上Table时的增删查改操作
-
+rc-form-table用于解决在antd2.x和antd3.x下，当使用Form表单处理数据遇上Table时的增删查改操作  
+另外如果你需要支持`antd4`版本的可以[点击这里获取](https://www.npmjs.com/package/antd-form-table)
 ### 预览图
 ![review.jpg](http://img.vuedata.cn/rc-form-table-review.gif)
 
