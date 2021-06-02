@@ -4,7 +4,7 @@
 ![npm](https://img.shields.io/badge/npm-%3E%3D6.14.5-orange)
 
 ### 开发者环境
-node:10.15.0
+node:10.15.0  
 npm:6.14.5
 ### 组件作用  
 rc-form-table用于解决在antd2.x和antd3.x下，当使用Form表单处理数据遇上Table时的增删查改操作  
