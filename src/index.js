@@ -46,7 +46,7 @@ class TableFormItem extends React.Component {
       const {formName,value}= this.state
       const formData = (getFieldValue(formName) || []);
 
-      if(index>=0){
+      if(index>=-1){
         formData.splice(index+1,0,newdata);
       }else{
         formData.push(newdata);
