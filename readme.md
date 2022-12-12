@@ -1,7 +1,10 @@
 
+![Page Views Count](https://badges.toozhao.com/badges/01GM1Z8FN1YGVEBH7Y3GETHATX/green.svg)
 ![antd](https://img.shields.io/badge/ant--desigin-2.x~3.x-blue)
 ![node](https://img.shields.io/badge/node-%3E%3D8-green)
 ![npm](https://img.shields.io/badge/npm-%3E%3D6.14.5-orange)
+
+
 
 ### 开发者环境
 node:10.15.0  
